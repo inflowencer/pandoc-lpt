@@ -1,0 +1,11 @@
+/build
+/tests
+*.aux
+*.log
+*.DS_Store
+*.h5
+*.vtu
+*.log
+*.out
+*.tmp
+*.pvd

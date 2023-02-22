@@ -1,0 +1,232 @@
+\documentclass[refline=nodate,footheight=-0.2cm, pagenumber=on]{scrlttr2}
+
+\usepackage{xcolor}
+
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{color}
+\usepackage[urlbordercolor={1 1 1}]{hyperref}
+\usepackage{inputenc}
+\usepackage{lmodern}
+\usepackage{fontenc}
+\usepackage{pdfpages}
+\usepackage{advdate}
+\usepackage{tabularx}
+\usepackage{graphicx}
+% \usepackage{lipsum}
+% \usepackage{typearea}
+% \areaset{15cm}{25cm}
+% \setlength{\marginparwidth}{5cm}
+\usepackage[]{geometry}
+\textheight=23cm
+% \voffset=-0.5cm
+
+% Page numbering
+% \usepackage{scrlayer-scrpage}
+
+% \cefoot{Seite \thepage\ von \letterlastpage}
+% \cofoot{Hola}
+% \areaset{14cm}{25cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Author's packages and definitions %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+$if(header-includes)$
+$header-includes$
+$endif$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pandoc specific definitions %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% For enumerations
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Graphics related
+$if(csl-refs)$
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+$endif$
+
+\begin{document}
+
+\urlstyle{same} % Proportionalschrift statt monospace bei URLs 
+
+% Avoid pandoc bug when there are lists in the body. 
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+%---------------------------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           KOMA OPTIONS            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\KOMAoptions{
+	% fontsize=11pt,%%			Schriftgroesse
+	paper=a4,%%					Papierformat
+	enlargefirstpage=off,%%		Erste Seite anders
+	pagenumber=off,%%	  	Seitenzahl oben mittig
+	headsepline=off,%%			Linie unter der Seitenzahl
+	parskip=half,%%				Abstand zwischen Absaetzen
+	firsthead=on,%%				Briefkopf ein/ausscahlten
+	fromalign=off,%%			Plazierung des Briefkopfs
+	fromalign=center,%%			Plazierung des Briefkopfs
+	fromphone=off,%%			Telefonnummer im Briefkopf
+	fromrule=off,%%				Linie im Briefkopf (aftername, afteraddress)
+	fromfax=off,%%				Faxnummer im Briefkopf
+	fromemail=off,%%			Emailadresse im Briefkopf
+	fromurl=off,%%				Homepage im Briefkopf
+	fromlogo=off,%%				Firmenlogo im Briefkopf
+	addrfield=on,%%				Adressfeld fuer Fensterkuverts
+	backaddress=plain,%%		...und Absender im Fenster
+	subject=beforeopening,%%	Plazierung der Betreffzeile
+	%locfield=wide,%%			Geschäftsfeld rechs neben Addr.feld
+	locfield=wide,%%			Geschäftsfeld rechs neben Addr.feld
+	foldmarks=on,%%				Faltmarken setzen
+	numericaldate=off,%%		Datum numerisch ausgeben
+	refline=narrow,%%			Geschaeftszeile im Satzspiegel
+	draft=off%%					Entwurfsmodus
+}
+\LoadLetterOption{DIN} 					%% Brief nach DIN 5008 (alternativ: DINmtext, SN, SNleft, KOMAold)
+
+
+% Verschiebung von Kopf- und Fusszeile
+
+\makeatletter
+	\@setplength[1]{locwidth}{65mm}
+	\@addtoplength{firstfootvpos}{-3em}
+    % Kein Platz zwischen Grußfloskel und eingescannter Unterschrift:
+	\@setplength{sigbeforevskip}{0pt} 
+\makeatother
+
+
+% Fonts
+\setkomafont{toaddress}{\sffamily}
+\setkomafont{toname}{\usekomafont{toaddress}}
+
+% Logo
+\setkomavar{fromurl}{\url{http://www.unibw.de/mb}}
+\setkomavar{fromlogo}{\includegraphics[width=6.5cm]{fig/logo/MB_IAF.png}}
+
+\newkomavar[\company]{fromcompany} 
+\setkomavar{fromcompany}{UniBw München}
+\setkomavar{fromaddress}{Werner-Heisenberg-Weg 39\\ 85577 Neubiberg}
+\setkomavar{backaddress}{\tiny{UniBw München}\usekomavar{backaddressseparator}{Werner-Heisenberg-Weg 39}\usekomavar{backaddressseparator}85577 Neubiberg\usekomavar{backaddressseparator}Germany}
+\setkomavar{backaddressseparator}{{{ $$\cdot$$ }}}
+
+\renewcommand{\enclname}{Anlage(n)}
+\setkomavar{enclseparator}{: }
+
+% Absenderfeld
+\setkomavar{location}{\sffamily \scriptsize %\flushright
+\begin{tabularx}{ \useplength{locwidth}}{ll}
+			~&~\\
+\multicolumn{2}{l}{\small{Institut für Aerodynamik und}}\\[0.1\normalbaselineskip]
+\multicolumn{2}{l}{\small{Flugsimulation - Prof. Meyer}}\\[1.\normalbaselineskip]
+Referenz 	& $subject$ \\[.3\normalbaselineskip]
+Name 	& $author.name$ \\[.3\normalbaselineskip]
+E-Mail 	& $author.email$ \\[.3\normalbaselineskip]
+$if(author.tel.work)$Tel 	& $author.tel.work$ \\[.3\normalbaselineskip]$endif$
+$if(author.tel.mobile)$Mobil 	& $author.tel.mobile$ \\[.3\normalbaselineskip]$endif$
+$if(author.room)$Raum 	& $author.room$ \\[2.0\normalbaselineskip]$endif$
+\multicolumn{2}{r}{\footnotesize $date$}
+\end{tabularx}}
+
+% Kopf/Fusszeile
+\setkomavar{firsthead}{
+\begin{minipage}[t][5cm][c]{0.51\textwidth}
+
+\includegraphics[width=6cm]{fig/logo/unibw.png}
+\vspace{1cm}
+\end{minipage}
+\hfill
+\begin{minipage}[t][4cm][c]{0.5\textwidth}
+\flushright
+\vspace{10mm}
+\usekomavar{fromlogo}\hspace{15mm}
+\vspace{1cm}
+\end{minipage}
+}
+
+\setkomavar{firstfoot}{\scriptsize{Institut für Aerodynamik und Flugsimulation, WE4/2 Strömungmechanik, Geb. 82/500, Raum 1503, Anschrift: Universität der Bundeswehr München - Prof. Dr.-Ing. O. Meyer, MB4 - 85577 Neubiberg}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%        END  KOMA OPTIONS          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%---------------------------------------------------------------------------
+% Geschaeftszeilenfelder
+%\newkomavar*[Angebots-Nr.]{offer}
+
+%\setkomavar{offer}{1508-01}
+%\setkomavar{yourref}{hr ###} 		%% 'Ihr Zeichen...'
+%\setkomavar{place}{Neubiberg} %% Absenderort
+%\setkomavar{placeseparator}{, den }
+%\setkomavar{customer}{}		%% Kundennummer
+\setkomavar{date}{$date$}
+%\setkomavar{yourmail}{28.08.2012}		%% 'Ihr Schreiben...'
+% \setkomavar{O74D}{##} 	%% 'Unser Zeichen'
+%\setkomavar{invoice}{120801} 		%% Rechnungsnummer
+\renewcommand*{\raggedsignature}{\raggedright}
+%---------------------------------------------------------------------------
+% Versendungsart
+%\setkomavar{specialmail}{Einschreiben mit Rückschein}
+%---------------------------------------------------------------------------
+% Seitenstil
+\pagestyle{plain}%% keine Header in der Kopfzeile
+%---------------------------------------------------------------------------
+
+\sffamily
+\begin{letter}{
+
+\textbf{$recipient.name$}\\
+$if(recipient.affiliation)$$recipient.affiliation$ \\$endif$
+$if(recipient.address.street)$$recipient.address.street$ \\$endif$
+$if(recipient.address.city)$$recipient.address.city$ \\$endif$
+
+\vspace{1cm}
+}
+
+%---------------------------------------------------------------------------
+\setkomavar{subject}{\sffamily $subject$}  %% Betreff
+%---------------------------------------------------------------------------
+\opening{$opening$}
+
+$body$
+
+\closing{$closing$ \\ \vspace*{2cm}
+$author.name$
+}
+%---------------------------------------------------------------------------
+%\ps{PS:}
+%\encl{anderes Dokument}
+%\cc{}
+%---------------------------------------------------------------------------
+\end{letter}
+
+%\includepdf[pages=-]{anhang}
+%---------------------------------------------------------------------------
+\end{document}
+%---------------------------------------------------------------------------

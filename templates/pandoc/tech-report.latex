@@ -1,0 +1,548 @@
+% \PassOptionsToPackage{unicode$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref}
+% \PassOptionsToPackage{hyphens}{url}
+% $if(colorlinks)$
+% \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+% $endif$
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+%                 D O C U M E N T   H E A D E R
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+\documentclass[12pt]{report}
+
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{longtable,booktabs,array}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{amsmath}
+\usepackage{calc}
+\usepackage[head=0.5in,foot=0.25in,top=0.65in,left=1in,right=1in,bottom=0.95in,footskip=0.35in,includeheadfoot]{geometry}
+\usepackage{lipsum}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{bookmark}
+\usepackage{vhistory}
+\usepackage{ragged2e}
+\usepackage{titlesec}
+\usepackage{acro}
+\usepackage{fontspec}
+\setmonofont[
+  Contextuals={Alternate}
+]{Fira Code}
+\usepackage{listings}
+\usepackage{lstfiracode} % https://ctan.org/pkg/lstfiracode
+% color def
+\usepackage{color}
+\definecolor{darkred}{rgb}{0.6,0.0,0.0}
+\definecolor{darkgreen}{rgb}{0,0.50,0}
+\definecolor{lightblue}{rgb}{0.0,0.42,0.91}
+\definecolor{orange}{rgb}{0.99,0.48,0.13}
+\definecolor{grass}{rgb}{0.18,0.80,0.18}
+\definecolor{pink}{rgb}{0.97,0.15,0.45}
+\lstset{
+%   language=C++,
+  style=FiraCodeStyle,   % Use predefined FiraCodeStyle
+%   frame=none,
+  basicstyle=\footnotesize\ttfamily,   % Use \ttfamily for source code listings
+  numbers=left,
+  numberstyle=\footnotesize,
+  stepnumber=1,
+  numbersep=5pt,
+  backgroundcolor=\color{black!5},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  breaklines=true,
+  breakatwhitespace=true,
+  breakautoindent=true,
+  linewidth=\textwidth,
+  commentstyle=\color{green}\itshape,
+  keywordstyle=\color{blue}\bfseries\itshape,
+  stringstyle=\color{red},
+  escapeinside={\%*}{*)},
+  numbers=left,
+  numberstyle=\tiny,
+  commentstyle=\color{darkgreen}\slshape,
+  keywordstyle=\color{blue}\bfseries\itshape,
+  keywordstyle=[2]\color{blue}\bfseries,
+  keywordstyle=[3]\color{grass},
+  keywordstyle=[4]\color{red},
+  keywordstyle=[5]\color{orange},
+  stringstyle=\color{darkred},
+  emphstyle=\color{pink}\underbar,
+}
+
+
+\newcommand{\partialdif}[1]{\frac{\partial}{\partial #1}}
+\newcommand{\partialdifshort}[1]{\partial_{#1}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\unitvec}[1]{\mathbf{e_{#1}}}
+\newcommand{\tensor}[1]{\mathbf{\underline{\underline{{#1}}}}}
+\newcommand{\partialdifof}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\totalderivative}[2]{\frac{D #1}{D #2}}
+
+\captionsetup{labelfont=bf}
+\setlength{\belowcaptionskip}{8pt plus 3pt minus 2pt} % Chosen fairly arbitrarily
+\def\UrlFont{\rmfamily}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+%             Author's definitions and usepackages
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+$if(header-includes)$
+$header-includes$
+$endif$
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+%             Pandoc specific definitions
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+% Tightlist
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Graphics
+$if(graphics)$
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+$endif$
+
+$if(csl-refs)$
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+$endif$
+
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+%             Document meta variables
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+\newcommand\docTitle{$title$}
+\newcommand\docVersion{$version$}
+\newcommand\docNumber{$document-number$}
+\newcommand\docDate{$date$}
+\newcommand\docLogo{fig/logo/lpt.png}
+\newcommand\docOrgLogo{fig/logo/unibw.png}
+\newcommand\docFooter{$affiliation.institute$}
+\newcommand\docOrganization{$affiliation.name$}
+\newcommand\runningHeader{$running-header$}
+\newcommand\docInstitute{\docFooter}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+%             Document geometry
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+% Titlepage geometry
+\newcommand{\TitlePageGeometry}{\newgeometry{top=0.75in,left=1in,right=1in,bottom=0.75in}}
+% Main geometry
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+%             Page numbering and columns types
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+\makeatletter
+\newif\if@mainmatter
+\newcommand{\frontmatter}{%
+  \clearpage
+  \pagenumbering{roman}
+  \newcommand{\computelastpage}{\romannumeral\numexpr\getpagerefnumber{LastFrontPage}-1\relax}
+}
+\newcommand{\mainmatter}{%
+  \clearpage
+  \immediate\write\@auxout{\noexpand\newlabel{LastFrontPage}{{}{\arabic{page}}}}%
+  \@mainmattertrue
+  \pagenumbering{arabic}
+  \renewcommand{\computelastpage}{\pageref{LastPage}}
+}
+% \newcommand{\backmatter}{%
+%   \clearpage
+%   \pagenumbering{Alph}
+%   \renewcommand{\computelastpage}{\romannumeral\numexpr\getpagerefnumber{LastBackPage}-1\relax}
+% }
+\makeatother
+% Add new table columns 
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+%          H E A D E R - F O O T E R   L A Y O U T
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+% Define size of the header/footer text
+\newcommand{\hfsize}{\footnotesize}
+
+% Create the Footer - Clear the current header/footer style
+% Set the current header/footer style
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{1pt}
+
+
+% Pagestyles
+\fancypagestyle{plain}{
+  \fancyhf{}% Clear header/footer
+   % Define the centered header
+   \chead{
+   \begin{tabular}{|L{.58\textwidth}|p{.365\textwidth}|}
+      \hline
+      \multicolumn{2}{|c|}{\hfsize\bfseries\runningHeader} \\
+      \hline
+      \multirow{2}{*}{\parbox{.58\textwidth}{\scriptsize\texttt{\docTitle}}}
+         & \hfsize  Document No: \docNumber \\
+         & \hfsize  Effective Date: \docDate \\
+      \hline
+   \end{tabular}
+   }
+   % Left footer
+   \lfoot{\footnotesize\textbf{\docInstitute}}
+   % Right Footer
+   \rfoot{\hfsize Page: \thepage \hspace{2pt} of \hspace{2pt} \computelastpage}
+}
+\fancypagestyle{mainmatter}{
+  \fancyhf{}% Clear header/footer
+   % Define the centered header
+   \chead{
+   \begin{tabular}{|L{.58\textwidth}|p{.365\textwidth}|}
+      \hline
+      \multicolumn{2}{|c|}{\hfsize\bfseries\runningHeader} \\
+      \hline
+      \multirow{2}{*}{\parbox{.58\textwidth}{\scriptsize\texttt{\docTitle}}}
+         & \hfsize  Document No: \docNumber \\
+         & \hfsize  Effective Date: \docDate \\
+      \hline
+   \end{tabular}
+   }
+   % Left footer
+   \lfoot{\footnotesize\textbf{\docInstitute}}
+   % Right Footer
+   \rfoot{\hfsize Page: \thepage \hspace{2pt} of \hspace{2pt} \computelastpage}
+}
+\fancypagestyle{backmatter}{
+  \fancyhf{}% Clear header/footer
+   % Define the centered header
+   \chead{
+   \begin{tabular}{|L{.58\textwidth}|p{.365\textwidth}|}
+      \hline
+      \multicolumn{2}{|c|}{\hfsize\bfseries\runningHeader} \\
+      \hline
+      \multirow{2}{*}{\parbox{.58\textwidth}{\scriptsize\texttt{\docTitle}}}
+         & \hfsize  Document No: \docNumber \\
+         & \hfsize  Effective Date: \docDate \\
+      \hline
+   \end{tabular}
+   }
+   % Left footer
+   \lfoot{\footnotesize\textbf{\docInstitute}}
+   % Right Footer
+   \rfoot{\hfsize Page: \thepage \hspace{2pt} of \hspace{2pt} \computelastpage}
+}
+% Set page style to plain.
+\pagestyle{plain}
+\setlength{\headsep}{0.5in}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+%          C H A P T E R  /  S E C T I O N   N A M I N G
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+\titleformat{\chapter}
+  {\normalfont\LARGE\bfseries}{\thechapter}{1em}{}
+\titlespacing*{\chapter}{0pt}{-10pt}{2.3ex plus .2ex}
+\renewcommand{\contentsname}{Table of Contents}
+
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+%          A C R O N Y M S
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+$for(acronyms)$
+\DeclareAcronym{$acronyms.short$}{
+   short=$acronyms.short$,
+   long=$acronyms.long$
+}
+$sep$
+$endfor$
+
+\newcommand{\passthrough}[1]{\lstset{mathescape=false}#1\lstset{mathescape=true}}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+%          D O C U M E N T   S T A R T S   H E R E
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+\begin{document}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+%          T I T L E P A G E
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+\TitlePageGeometry
+\thispagestyle{empty}
+
+\vspace*{0.9in}
+
+% Create graphics at the top of the page
+\begin{minipage}{0.45\textwidth}
+   \begin{flushleft}
+      \includegraphics[width=2.5in]{\docOrgLogo}
+   \end{flushleft}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+   % \centering\textbf{\Large \@docTypeTitle \\ \vspace{6pt} Technical Report}
+   \centering\textbf{\LARGE \\ Technical Report}
+\end{minipage}%
+
+\vspace{\baselineskip}
+{\color{black}\hrule height 2pt}
+
+\vspace{0.65in}
+
+\raggedright
+
+\begin{flushleft}
+   \textbf{\Large \docTitle} 
+   \setstretch{1.5}
+\end{flushleft}
+
+\vspace{28pt}
+
+\textit{\large Document Number: \docNumber}
+
+\vspace{1.2in}
+
+\textbf{\large Version: \docVersion}
+
+\vspace{24pt}  
+
+{\large \docDate}
+
+   % fill in empty space
+\vfill
+
+\includegraphics[height=1.3in]{\docLogo}
+
+\vspace{-6pt}
+
+\begin{flushleft}
+
+   \setlength{\parskip}{0pt}
+
+   \docInstitute
+
+\end{flushleft}
+
+\vspace{0.1in} 
+
+\begin{center}
+   {\footnotesize\textbf{{\docOrganization}}}
+\end{center}
+
+\newpage
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+%          Revision Log, LoF, LoT, etc...
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+% Set roman pagenumbering
+\frontmatter
+\restoregeometry
+
+% Revision log
+\pdfbookmark[2]{Revision Log}{revision}
+\makeatletter
+\def \vh@chapter{%
+  \centering{\large\textbf{REVISION LOG}}
+  \vspace*{0.2in}
+}
+\makeatother
+
+% Version history
+$if(version-history)$
+\begin{versionhistory}
+   \footnotesize
+   $for(version-history)$
+   \vhEntry{$version-history.version$}{$version-history.date$}{$version-history.author$}{$version-history.description$}
+   $endfor$
+\end{versionhistory}
+\normalsize
+$endif$
+
+
+% Abstract
+\newpage
+\pdfbookmark[2]{Executive Summary}{execsummary}
+\justify
+\begin{center}
+   {\large\textbf{EXECUTIVE SUMMARY}}
+\end{center}
+\vspace*{0.2in}
+
+$abstract$
+
+% -------------------
+% Author page
+\setlength{\parindent}{0pt}
+\newpage
+\pdfbookmark[2]{Author Page}{author}
+
+\begin{center}
+   {\large\textbf{AUTHOR PAGE}}
+\end{center}
+\vspace{15pt}
+
+\textbf{Prepared by:} \vspace{12pt}
+
+$if(authors.prepare)$
+$for(authors.prepare)$
+\begin{minipage}{.48\textwidth}%
+$if(authors.prepare.signed)$
+\textit{/s/ $authors.prepare.name$} \hfill $authors.prepare.sign-date$
+$else$
+\textit{/s/ authors: prepare: signed: true} \hfill $authors.prepare.sign-date$
+$endif$
+\vspace{6pt} \hrule \vspace{5pt}
+\small\textbf{$authors.prepare.name$} \hfill \textbf{Date} \break
+{\footnotesize $authors.prepare.position$ \hfill \break
+$authors.prepare.organization$ \hfill \break
+$authors.prepare.address.street$ \hfill \break
+$authors.prepare.address.city$, $authors.prepare.address.country$ \hfill}
+\normalsize
+\end{minipage}%
+$sep$ \hspace*{10pt}
+$endfor$
+$endif$
+
+% -------------------
+% Contributor page
+\newpage
+\pdfbookmark[2]{Contributor Page}{contributor}
+
+\begin{center}
+   {\large\textbf{CONTRIBUTOR PAGE}}
+\end{center}
+\vspace{15pt}
+
+\textbf{Contributors:} \vspace{12pt}
+
+$if(authors.contribute)$
+$for(authors.contribute)$
+\begin{minipage}{.48\textwidth}%
+$if(authors.contribute.signed)$
+\textit{/s/ $authors.contribute.name$} \hfill $authors.contribute.sign-date$
+$else$
+\textit{/s/ authors: contribute: signed: true} \hfill $authors.contribute.sign-date$
+$endif$
+\vspace{6pt} \hrule \vspace{5pt}
+\small\textbf{$authors.contribute.name$} \hfill \textbf{Date} \break
+{\footnotesize $authors.contribute.position$ \hfill \break
+$authors.contribute.organization$ \hfill \break
+$authors.contribute.address.street$ \hfill \break
+$authors.contribute.address.city$, $authors.contribute.address.country$ \hfill}
+\normalsize
+\end{minipage}%
+$sep$ \hspace*{10pt}
+$endfor$
+$endif$
+
+% -------------------
+% Signature page
+\newpage
+\pdfbookmark[2]{Signature Page}{signature}
+
+\begin{center}
+   {\large\textbf{SIGNATURE PAGE}}
+\end{center}
+\vspace{15pt}
+
+\textbf{Approved by:} \vspace{12pt}
+
+$if(authors.sign)$
+$for(authors.sign)$
+\begin{minipage}{.48\textwidth}%
+$if(authors.sign.signed)$
+$if(authors.sign-name)$
+\textit{/s/ $authors.sign.sign-name$} \hfill $authors.sign.sign-date$
+$else$
+\textit{/s/ $authors.sign.sign-name$} \hfill $authors.sign.sign-date$
+$endif$
+$else$
+\textit{/s/ authors: sign: signed: true} \hfill $sign-date$
+$endif$
+\vspace{6pt} \hrule \vspace{5pt}
+\small\textbf{$authors.sign.name$} \hfill \textbf{Date} \break
+{\footnotesize $authors.sign.position$ \hfill \break
+$authors.sign.organization$ \hfill \break
+$authors.sign.address.street$ \hfill \break
+$authors.sign.address.city$, $authors.sign.address.country$ \hfill}
+\normalsize
+\end{minipage}%
+$sep$ \hspace*{10pt}
+$endfor$
+$endif$
+
+% -------------------
+% Table of Contents
+\newpage
+\pdfbookmark[2]{ToC Page}{toc}
+\tableofcontents
+
+% -------------------
+% List of Figures
+\newpage
+\pdfbookmark[2]{List of Figures Page}{lof}
+\listoffigures
+
+% -------------------
+% List of Tables
+\newpage
+\pdfbookmark[2]{List of Tables Page}{lot}
+\listoftables
+
+% -------------------
+% List of Acronyms
+\newpage
+\NewAcroTemplate[heading]{center}{\acrolistname}
+\acsetup{
+  list/name = List of Acronyms,
+}
+\pdfbookmark[2]{List of Acronyms Page}{loa}
+\printacronyms
+
+\mainmatter
+\pagestyle{mainmatter}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+%
+%          D O C U M E N T   S T A R T S    H E R E
+%
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
+
+$body$
+
+\end{document}
