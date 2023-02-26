@@ -22,7 +22,7 @@
 \usepackage{subfig}
 \usepackage{amsmath}
 \usepackage{calc}
-\usepackage[head=0.5in,foot=0.25in,top=0.65in,left=1in,right=1in,bottom=0.95in,footskip=0.35in,includeheadfoot]{geometry}
+\usepackage[head=0.5in,foot=0.25in,top=0.65in,left=1in,right=1in,bottom=0.95in,footskip=0.5in,includeheadfoot]{geometry}
 \usepackage{lipsum}
 \usepackage{setspace}
 \usepackage{fancyhdr}
