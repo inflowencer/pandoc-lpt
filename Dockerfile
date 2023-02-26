@@ -14,14 +14,16 @@ RUN apt-get update && apt-get install lua5.4 fonts-firacode
 # Install custom packages, update accordingly
 RUN	tlmgr install latexmk translations siunitx caption float subfig amsmath graphics acro multirow \
   tools lipsum setspace fancyhdr lastpage bookmark vhistory ragged2e titlesec fontspec lstfiracode \
-  mhchem
+  mhchem advdate
 RUN	tlmgr update --all
 
 # pandoc and LaTeX folders
-RUN  mkdir -p ${PANDOC_TEMPLATES} ${PANDOC_TEX_RES} ${PANDOC_RESOURCES}
+RUN  mkdir -p ${PANDOC_TEMPLATES} ${PANDOC_TEX_RES} ${PANDOC_RESOURCES}/logo ${PANDOC_RESOURCES}/csl
 COPY templates/classes/* ${PANDOC_TEX_RES}/.
 COPY templates/pandoc/* ${PANDOC_TEMPLATES}/.
-COPY templates/csl/* ${PANDOC_RESOURCES}/.
+COPY templates/csl/*  ${PANDOC_RESOURCES}/csl/.
+COPY templates/logo/* ${PANDOC_RESOURCES}/logo/.
+
 
 ENTRYPOINT [ "/bin/bash", "-l", "-c" ]
 

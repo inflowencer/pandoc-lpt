@@ -108,7 +108,7 @@ $endif$
 
 \vspace*{1cm}
 
-\includegraphics[width=0.6\textwidth]{fig/logo/unibw.png}
+\includegraphics[width=0.6\textwidth]{/root/resources/logo/unibw.png}
 
 \vspace{1.5cm}
 {\Huge %
@@ -157,7 +157,7 @@ $author.institute$\\
 
 \vspace*{1cm}
 
-\includegraphics[width=0.6\textwidth]{fig/logo/unibw.png}
+\includegraphics[width=0.6\textwidth]{/root/resources/logo/unibw.png}
 
 \vspace{1.5cm}
 {\Huge %
