@@ -1,10 +1,4 @@
-\PassOptionsToPackage{unicode$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref}
-\PassOptionsToPackage{hyphens}{url}
-$if(colorlinks)$
-\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
-$endif$
-
-\documentclass{new-aiaa}
+\documentclass[journal]{new-aiaa}
 
 % Default mb-42 template definitions and usepackages
 \usepackage{hyperref}
@@ -35,6 +29,16 @@ $endif$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Pandoc specific definitions %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\PassOptionsToPackage{unicode$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+
+$if(colorlinks)$
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+$endif$
+
 $if(graphics)$
 \usepackage{graphicx}
 \makeatletter
@@ -51,8 +55,34 @@ $if(graphics)$
 \makeatother
 $endif$
 
+$if(csl-refs)$
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+$endif$
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Authors and Affiliations
+%       Title, Authors and Affiliations
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{$title$}
 
@@ -63,7 +93,7 @@ $endfor$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%     DOCUMENT BEGINS HERE
+%       DOCUMENT BEGINS HERE
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -71,48 +101,43 @@ $endfor$
 \maketitle
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% List of Symbols and Subscripts
+%       Abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% {\renewcommand\arraystretch{1.0}
-% \noindent\begin{longtable*}{@{}l @{\quad=\quad} l@{}}
-% $A$  & amplitude of oscillation \\
-% $a$ &    cylinder diameter \\
-% $C_p$& pressure coefficient \\
-% $Cx$ & force coefficient in the \textit{x} direction \\
-% $Cy$ & force coefficient in the \textit{y} direction \\
-% c   & chord \\
-% d$t$ & time step \\
-% $Fx$ & $X$ component of the resultant pressure force acting on the vehicle \\
-% $Fy$ & $Y$ component of the resultant pressure force acting on the vehicle \\
-% $f, g$   & generic functions \\
-% $h$  & height \\
-% $i$  & time index during navigation \\
-% $j$  & waypoint index \\
-% $K$  & trailing-edge (TE) nondimensional angular deflection rate\\
-% $\Theta$ & boundary-layer momentum thickness\\
-% $\rho$ & density\\
-% \multicolumn{2}{@{}l}{Subscripts}\\
-% cg & center of gravity\\
-% $G$ & generator body\\
-% iso	& waypoint index
-% \end{longtable*}}
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
 
-%%%%%%%%%
-% Title %
-%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       Symbols and Subscripts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+$if(los)$
+\section*{Nomenclature}
 
-%%%%%%%%%%%%
-% Abstract %
-%%%%%%%%%%%%
+{\renewcommand\arraystretch{1.0}
+\noindent\begin{longtable*}{@{}l @{\quad=\quad} l@{}}
+$for(los)$
+$los.symbol$ & $los.description$ \\
+$endfor$
+$endif$
+$if(loss)$
+\multicolumn{2}{@{}l}{\textbf{Subscripts}}\\
+$for(loss)$
+$loss.subs$ & $loss.description$ \\
+$endfor$
+$endif$
+\end{longtable*}}
 
-% $if(abstract)$
-% \begin{abstract}
-% $abstract$
+
+
 
 %%%%%%%%
 % Body %
 %%%%%%%%
 
 $body$
+
+\bibliography{ref/ref.bib}
 
 \end{document}
