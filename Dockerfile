@@ -14,7 +14,8 @@ RUN apt-get update && apt-get install lua5.4 fonts-firacode
 # Install custom packages, update accordingly
 RUN	tlmgr install latexmk translations siunitx caption float subfig amsmath graphics acro multirow \
   tools lipsum setspace fancyhdr lastpage bookmark vhistory ragged2e titlesec fontspec lstfiracode \
-  mhchem advdate acronym bigfoot xstring
+  mhchem advdate acronym bigfoot xstring newtx fontaxes preprint lettrine minifp quoting tex-gyre \
+  txfonts
 RUN	tlmgr update --all
 
 # pandoc and LaTeX folders
