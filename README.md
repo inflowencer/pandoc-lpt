@@ -4,19 +4,17 @@ Pandoc image for documents written in Markdown and YAML into LaTeX and Word. Req
 
 ## Build
 
-Inside a terminal, run:
-
-```sh
-docker pull mmaigler/pandoc-lpt
-```
-
-or search (`CTRL+k`) in the GUI: `pandoc-lpt`. Alternatively, you can build the image by yourself by running
+Inside a terminal in this folder, run (recommended):
 
 ```sh
 docker build -t pandoc-lpt .
 ```
 
-inside this directory.
+or pull directly from the Hub
+
+```sh
+docker pull mmaigler/docker-lpt
+```
 
 ## Examples
 
