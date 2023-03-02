@@ -4,7 +4,7 @@ LABEL version="0.2"
 LABEL description="Document geration, plotting and data manipulation of LPT"
 
 RUN mkdir -p /root/.fonts
-COPY src/fonts/Avenir.ttf /root/.fonts/.
+COPY src/fonts/* /root/.fonts/.
 
 # Build arguments
 ARG TEXMFHOME=/root/texmf
