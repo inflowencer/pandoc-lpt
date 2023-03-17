@@ -1,6 +1,6 @@
-# pandoc-lpt
+# Docker LPT
 
-Pandoc image for documents written in Markdown and YAML into LaTeX and Word. Requires [docker](https://docs.docker.com/get-docker/) for building.
+Image for writing documents, generating plots and data manipulation [@LPT](https://www.unibw.de/plasmatechnik). Requires [docker](https://docs.docker.com/get-docker/) for building.
 
 ## Build
 

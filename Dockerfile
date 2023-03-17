@@ -13,12 +13,12 @@ ARG PANDOC_TEMPLATES=/root/.local/share/pandoc/templates
 ARG PANDOC_RESOURCES=/root/resources
 
 RUN sed -i 's/htt[p|ps]:\/\/archive.ubuntu.com\/ubuntu\//mirror:\/\/mirrors.ubuntu.com\/mirrors.txt/g' /etc/apt/sources.list
-RUN apt-get update && apt-get install lua5.4 fonts-firacode python3-pip
+RUN apt-get update -y && apt-get install -y lua5.4 fonts-firacode python3-pip
 # Install custom packages, update accordingly
 RUN	tlmgr install latexmk translations siunitx caption float subfig amsmath graphics acro multirow \
   tools lipsum setspace fancyhdr lastpage bookmark vhistory ragged2e titlesec fontspec lstfiracode \
   mhchem advdate acronym bigfoot xstring newtx fontaxes preprint lettrine minifp quoting tex-gyre \
-  txfonts
+  txfonts chemformula
 RUN	tlmgr update --all
 RUN pip3 install matplotlib pandas numpy scipy h5py pyyaml
 
