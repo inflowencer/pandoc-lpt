@@ -39,6 +39,16 @@ $endif$
 \captionsetup{labelfont=bf}
 \setlength{\belowcaptionskip}{8pt plus 3pt minus 2pt} % Chosen fairly arbitrarily
 
+% Consistent spacing between equations and text
+% from https://tex.stackexchange.com/a/69665/121799
+\expandafter\def\expandafter\normalsize\expandafter{%
+  \normalsize  
+  \setlength\abovedisplayskip{4ex}
+  \setlength\belowdisplayskip{4ex}
+  \setlength\abovedisplayshortskip{4ex}
+  \setlength\belowdisplayshortskip{4ex}
+}
+
 % Author's packages and definitions
 $if(header-includes)$
 $header-includes$
