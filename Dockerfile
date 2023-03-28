@@ -12,8 +12,9 @@ ARG PANDOC_TEX_RES=${TEXMFHOME}/tex/latex/pandoc/
 ARG PANDOC_TEMPLATES=/root/.local/share/pandoc/templates
 ARG PANDOC_RESOURCES=/root/resources
 
-RUN sed -i 's/htt[p|ps]:\/\/archive.ubuntu.com\/ubuntu\//mirror:\/\/mirrors.ubuntu.com\/mirrors.txt/g' /etc/apt/sources.list
-RUN apt-get update -y && apt-get install -y lua5.4 fonts-firacode python3-pip
+RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
+RUN apt-get update -y && apt-get install -y --no-install-recommends fonts-firacode python3-pip fontconfig ttf-mscorefonts-installer
+
 # Install custom packages, update accordingly
 RUN	tlmgr install latexmk translations siunitx caption float subfig amsmath graphics acro multirow \
   tools lipsum setspace fancyhdr lastpage bookmark vhistory ragged2e titlesec fontspec lstfiracode \
