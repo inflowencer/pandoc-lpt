@@ -9,4 +9,4 @@
 *.out
 *.tmp
 *.pvd
-*local*
+templates/local

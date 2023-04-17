@@ -86,9 +86,13 @@ $endif$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{$title$}
 
-$for(authors)$
-\author{$authors.name$ \footnote{$authors.department$, $authors.mail-stop$}}
-\affil{$authors.institute.name$, $authors.institute.address.street$, $authors.institute.address.postcode$, $authors.institute.address.city$, $authors.institute.address.country$}
+$for(affiliation)$
+\author{
+  $for(affiliation.authors)$
+  $affiliation.authors.name$ \footnote{$affiliation.authors.jobtitle$, $affiliation.authors.department$, $affiliation.authors.mail-stop$}$sep$, and 
+$endfor$
+}
+\affil{$affiliation.name$, $affiliation.address.street$, $affiliation.address.postcode$, $affiliation.address.city$, $affiliation.address.country$}
 $endfor$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
