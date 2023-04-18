@@ -93,7 +93,7 @@ The following abbreviations are used in this manuscript:\\
 \noindent 
 \begin{tabular}{@{}ll}
 $for(abbreviations)$
-$abbreviations.short$ & $abbreviations.short$$sep$\\
+$abbreviations.short$ & $abbreviations.long$$sep$\\
 $endfor$
 \end{tabular}
 }
