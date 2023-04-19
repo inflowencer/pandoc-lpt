@@ -7,14 +7,18 @@ RUN mkdir -p /root/.fonts
 COPY src/fonts/* /root/.fonts/.
 
 # Build arguments
+ARG USER_ID
+ARG GROUP_ID
 ARG TEXMFHOME=/root/texmf
 ARG PANDOC_TEX_RES=${TEXMFHOME}/tex/latex/pandoc/
 ARG PANDOC_TEMPLATES=/root/.local/share/pandoc/templates
 ARG PANDOC_SCRIPTS=/root/.local/share/pandoc/scripts
 ARG PANDOC_RESOURCES=/root/resources
 
+
 RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
-RUN apt-get update -y && apt-get install -y --no-install-recommends fonts-firacode python3-pip fontconfig ttf-mscorefonts-installer
+RUN apt-get update -y && apt-get install -y --no-install-recommends fonts-firacode python3-pip fontconfig ttf-mscorefonts-installer \
+  texlive-font-utils
 
 # Install custom packages, update accordingly
 RUN tlmgr update --self
@@ -33,6 +37,11 @@ COPY templates/pandoc/* ${PANDOC_TEMPLATES}/.
 COPY templates/csl/*  ${PANDOC_RESOURCES}/csl/.
 COPY templates/logo/* ${PANDOC_RESOURCES}/logo/.
 COPY src/scripts/* ${PANDOC_SCRIPTS}/.
+
+# Add user to avoid permission issues
+RUN addgroup --gid $GROUP_ID user
+RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
+USER user
 
 # ENTRYPOINT [ "/bin/bash", "-l", "-c" ]
 ENTRYPOINT [ "/bin/bash" ]
