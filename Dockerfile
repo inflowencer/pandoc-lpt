@@ -41,6 +41,7 @@ COPY src/scripts/* ${PANDOC_SCRIPTS}/.
 # Add user to avoid permission issues
 RUN addgroup --gid $GROUP_ID user
 RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
+RUN chmod -R 777 /root
 USER user
 
 # ENTRYPOINT [ "/bin/bash", "-l", "-c" ]
