@@ -35,6 +35,12 @@
 \usepackage{longtable}
 \usepackage{siunitx}
 \usepackage{mhchem}
+\usepackage{acro}
+
+% Author's custom definitions
+$if(custom-options)$
+$custom-options$
+$endif$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Pandoc specific definitions %
@@ -112,6 +118,17 @@ $endif$
 %\PACS{J0101}
 %\MSC{}
 %\JEL{}
+
+% Abbreviations
+$for(abbreviations)$
+\DeclareAcronym{$abbreviations.short$}{
+  short = $abbreviations.short$,
+  long = $abbreviations.long$,
+  $if(abbreviations.long-plural)$
+  long-plural = $abbreviations.long-plural$
+  $endif$
+}
+$endfor$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
