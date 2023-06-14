@@ -26,7 +26,7 @@ RUN	tlmgr install latexmk translations siunitx caption float subfig amsmath grap
   tools lipsum setspace fancyhdr lastpage bookmark vhistory ragged2e titlesec fontspec lstfiracode \
   mhchem advdate acronym bigfoot xstring newtx fontaxes preprint lettrine minifp quoting tex-gyre \
   txfonts chemformula tabto-ltx soul microtype pgf totcount changepage frankenstein was pbox \
-  tocloft marginnote marginfix enotez seqsplit latex-fonts tex-gyre palatino mathpazo fpl
+  tocloft marginnote marginfix enotez seqsplit latex-fonts tex-gyre palatino mathpazo fpl amscls
 RUN	tlmgr update --all
 RUN pip3 install matplotlib pandas numpy scipy h5py pyyaml
 
